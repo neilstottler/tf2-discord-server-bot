@@ -72,23 +72,18 @@ async def server_command(user, hostname, password, command, servicename, homedir
 
         #start server
         async def serverStartService(servicename, hostname):
-            #check if it's running first
-            if await serverStatusCheckerBool(servicename) is True:
-                await conn.run(f'systemctl --user start {servicename}')
-                return f":white_check_mark: The {servicename} on {hostname} has been started. :white_check_mark:"
+            await conn.run(f'systemctl --user start {servicename}')
+            return f":white_check_mark: The {servicename} on {hostname} has been started. :white_check_mark:"
             
         #stop server
         async def serverStopService(servicename, hostname):
-            if await serverStatusCheckerBool(servicename) is False:
-                await conn.run(f'systemctl --user stop {servicename}')
-                return f":octagonal_sign: The {servicename} on {hostname} has been stopped. :octagonal_sign:"
+            await conn.run(f'systemctl --user stop {servicename}')
+            return f":octagonal_sign: The {servicename} on {hostname} has been stopped. :octagonal_sign:"
         
         #restart server
         async def serverRestartService(servicename, hostname):
-            #is the service even there?
-            if await serverStatusCheckerBool(servicename) is False:
-                await conn.run(f'systemctl --user restart {servicename}')
-                return f":white_check_mark: The {servicename} on {hostname} has been restarted. :white_check_mark:"
+            await conn.run(f'systemctl --user restart {servicename}')
+            return f":white_check_mark: The {servicename} on {hostname} has been restarted. :white_check_mark:"
             
 
         if command =='status':
